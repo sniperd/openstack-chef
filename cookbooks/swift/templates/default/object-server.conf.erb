@@ -1,0 +1,17 @@
+[DEFAULT]
+bind_ip = <%= node.ipaddress %>
+workers = 2
+user = swift
+<%= "mount_check = false" if @disable_mount_check %>
+
+[pipeline:main]
+pipeline = object-server
+
+[app:object-server]
+use = egg:swift#object
+
+[object-replicator]
+
+[object-updater]
+
+[object-auditor]

@@ -1,0 +1,25 @@
+= DESCRIPTION:
+  Installs and configures openstack swift, This cookbook was written from scratch but has inspiration from Voxel.net's swift cookbook jwv@voxel.net, that cookbook does not have the ability for tempauth and installs an old version of swift (1.3 as of this writing).
+  This cookbook written and opensourced by Sonian.net, maintainer: josh.pasqualetto@sonian.net . Sonian is the leader in Cloud Powered Email Archiving and Search, If your looking for cloud based email archiving and search company, check us out.
+
+= REQUIREMENTS:
+  At least 3-4 nodes for a test environment. If you want this to be fast, make sure you have some very fast disk IO behind the block storage.
+  A test setup would look like this
+  Server1: role[swift_proxy_server]
+  Server2: role[swift_storage_server],role[swift_zone_1]
+  Server3: role[swift_storage_server],role[swift_zone_2]
+  Server4: role[swift_storage_server],role[swift_zone_3]
+
+= ATTRIBUTES:
+  All related attributes are stored under node.swift
+  Note: node.swift.zone must be set, The included 3 roles will set this for you, or you can set it via some other method. It must not change once set however. Technically you can
+  set the zone per block device. Our method was to only set a zone per server, and use multiple zones. However zone 1,2,3 could all be on the same server, or in different datacenters.
+
+= USAGE:
+
+  I recommend using tempauth to begin with and switching to swauth if you feel so inclined.
+  See http://swift.openstack.org for more info
+
+= HELP:
+  BUG: python-netifaces has a bug where it will blow up if certain interfaces do not have ip addresses (I found this out during testing on EC2). Look at the bottom of swift::default for a work around.
+  If you run into any issues please email me at josh.pasqualetto@sonian.net
